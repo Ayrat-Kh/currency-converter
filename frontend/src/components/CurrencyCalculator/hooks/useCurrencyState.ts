@@ -25,16 +25,12 @@ const defaultCurrencyState: CurrencyState = {
 };
 
 export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
-  const { data: rates, isSuccess } = useGetCurrencyRates();
+  const { data: rates } = useGetCurrencyRates();
 
   const [currencyState, setCurrencyState] =
     useState<CurrencyState>(defaultCurrencyState);
 
   const handleFromAmountChange = (value: number) => {
-    if (!isSuccess) {
-      return;
-    }
-
     const exchangedValue = exchangeCurrency({
       fromValue: value,
       fromCurrency: currencyState.fromCurrency,
@@ -50,10 +46,6 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   };
 
   const handleToAmountChange = (value: number) => {
-    if (!isSuccess) {
-      return;
-    }
-
     const exchangedValue = exchangeCurrency({
       fromValue: value,
       fromCurrency: currencyState.toCurrency,
@@ -69,10 +61,6 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   };
 
   const handleFromCurrencyChange = (currency: string) => {
-    if (!isSuccess) {
-      return;
-    }
-
     const exchangedValue = exchangeCurrency({
       fromValue: currencyState.fromAmount,
       fromCurrency: currency,
@@ -88,10 +76,6 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   };
 
   const handleToCurrencyChange = (currency: string) => {
-    if (!isSuccess) {
-      return;
-    }
-
     const exchangedValue = exchangeCurrency({
       fromValue: currencyState.fromAmount,
       fromCurrency: currency,

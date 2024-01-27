@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 type Response<T> = {
   message: 'Success';
@@ -20,7 +20,7 @@ const getCurrencies = async (): Promise<GetCurrencyResponse> => {
 export const CurrenciesKey = ['currencies'];
 
 export const useGetCurrencies = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: CurrenciesKey,
     queryFn: getCurrencies,
   });
@@ -43,7 +43,7 @@ const getCurrencyRates = async (): Promise<GetCurrencyRatesResponse> => {
 export const CurrenciesRateKey = ['currency-rates'];
 
 export const useGetCurrencyRates = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: CurrenciesRateKey,
     queryFn: getCurrencyRates,
   });

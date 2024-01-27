@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { type ChangeEventHandler, type FC, useId } from 'react';
 
 import { Label } from './Label';
@@ -11,6 +12,7 @@ export type SelectProps = Omit<
 > & {
   label: string;
   options: SelectOption[];
+  variant?: 'large'; // add spec for a small, sm
   selected: string;
   onChange: (selected: string) => void;
 };
@@ -18,16 +20,24 @@ export type SelectProps = Omit<
 export const Select: FC<SelectProps> = ({
   label,
   className,
+  variant = 'large', // add spec for a small, sm
   options,
   selected,
   onChange,
   ...rest
 }) => {
+  const inputId = useId();
+
   // external className only allowed to add margins by parent
   // in any other cases label component should design itself
-  const totalClasses = `${classes['select-container']} ${className}`;
+  const totalClasses = cn(classes['select-container'], className);
 
-  const inputId = useId();
+  const selectClassNames: unknown[] = [classes.input];
+  switch (variant) {
+    case 'large':
+    default:
+      selectClassNames.push(classes['select-large']);
+  }
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     onChange(event.target.value);
@@ -35,14 +45,14 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Label htmlFor={inputId} {...rest}>
+      <Label className={classes['select-label']} htmlFor={inputId} {...rest}>
         {label}
       </Label>
 
       <select
         id={inputId}
         value={selected}
-        className={classes.select}
+        className={cn(selectClassNames)}
         onChange={handleChange}
       >
         <option hidden disabled defaultValue=""></option>

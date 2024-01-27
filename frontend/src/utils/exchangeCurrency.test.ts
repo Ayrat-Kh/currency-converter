@@ -7,6 +7,7 @@ const testRates = {
   rates: {
     AED: 4.000807,
     USD: 1.089277,
+    RUB: 95,
   },
 };
 
@@ -31,5 +32,16 @@ describe('exchangeCurrency', () => {
         fromValue: 7.35,
       }),
     ).toBeCloseTo(2);
+  });
+
+  it('should convert currency from  aed to usd', () => {
+    expect(
+      exchangeCurrency({
+        fromCurrency: 'EUR',
+        toCurrency: 'RUB',
+        rates: testRates,
+        fromValue: 1,
+      }),
+    ).toBeCloseTo(95);
   });
 });

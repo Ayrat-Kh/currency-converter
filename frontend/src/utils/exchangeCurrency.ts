@@ -27,7 +27,7 @@ export const exchangeCurrency = ({
   }
 
   let toRate = 1;
-  if (fromCurrency !== rates.base) {
+  if (toCurrency !== rates.base) {
     toRate = rates.rates[toCurrency];
   }
 

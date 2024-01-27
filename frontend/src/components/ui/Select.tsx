@@ -32,7 +32,7 @@ export const Select: FC<SelectProps> = ({
   // in any other cases label component should design itself
   const totalClasses = cn(classes['select-container'], className);
 
-  const selectClassNames: unknown[] = [classes.input];
+  const selectClassNames: unknown[] = [classes.select];
   switch (variant) {
     case 'large':
     default:

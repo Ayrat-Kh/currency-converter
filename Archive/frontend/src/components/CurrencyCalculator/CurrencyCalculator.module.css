@@ -1,0 +1,31 @@
+.calculator-container {
+  padding: 4px;
+  background-color: var(--bg-primary);
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'total total'
+    'amount-1 cur-select-1'
+    'amount-2 cur-select-2';
+}
+
+.calculator-screen {
+  grid-area: total;
+}
+
+.calculator-first_amount {
+  grid-area: amount-1;
+}
+
+.calculator-first_cur_select {
+  grid-area: cur-select-1;
+}
+
+.calculator-second_amount {
+  grid-area: amount-2;
+}
+
+.calculator-second_cur_select {
+  grid-area: cur-select-2;
+}

@@ -1,0 +1,10 @@
+.summary-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px;
+  color: white;
+  background-color: var(--bg-tertiary);
+  border-radius: 4px;
+  min-height: 72px;
+}

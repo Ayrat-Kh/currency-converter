@@ -5,7 +5,7 @@
 .input {
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
-  background-color: white;
+  background-color: var(--bg-white);
   padding: 7px;
   padding-top: 16px;
   padding-bottom: 4px;

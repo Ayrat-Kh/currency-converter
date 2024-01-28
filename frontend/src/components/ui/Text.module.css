@@ -26,8 +26,8 @@
 .text-primary {
   color: var(--text-primary);
 }
-.text-white {
-  color: var(--text-white);
+.text-light {
+  color: var(--text-light);
 }
 
 .text-normal {

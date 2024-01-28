@@ -11,7 +11,7 @@
   background-color: var(--bg-tertiary);
   padding: 12px;
   min-height: 72px;
-  color: white;
+  color: var(--text-light);
 }
 
 .summary-main_currency {

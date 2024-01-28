@@ -12,14 +12,14 @@ const variantClasses: Record<TextVariant, string> = {
   h1: 'text-h1',
 };
 
-type TextColor = 'primary' | 'secondary' | 'tertiary' | 'error' | 'white';
+type TextColor = 'primary' | 'secondary' | 'tertiary' | 'error' | 'light';
 
 const colorClasses: Record<TextColor, string> = {
   primary: 'text-primary',
   secondary: 'text-secondary',
   tertiary: 'text-tertiary',
   error: 'text-error',
-  white: 'text-white',
+  light: 'text-light',
 };
 
 type TextKind = 'normal' | 'semibold' | 'bold';

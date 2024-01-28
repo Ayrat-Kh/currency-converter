@@ -48,20 +48,20 @@ const SummaryInner: FC<SummaryProps> = ({
   ) {
     return (
       <div className={classes['summary-main_currency']}>
-        <Text color="white">Please fill the form</Text>
+        <Text light="white">Please fill the form</Text>
       </div>
     );
   }
 
   return (
     <>
-      <Text color="white" className={classes['summary-main_currency']}>
+      <Text color="light" className={classes['summary-main_currency']}>
         {formatNumber(mainAmount)} {mainCurrency} Equals
       </Text>
 
       <Text
         kind="bold"
-        color="white"
+        color="light"
         className={classes['summary-secondary_currency']}
       >
         {formatNumber(secondaryAmount)} {secondaryCurrency}

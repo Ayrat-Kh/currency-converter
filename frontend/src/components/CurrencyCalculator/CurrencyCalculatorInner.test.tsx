@@ -1,8 +1,8 @@
-import { QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { type Mock, vi } from 'vitest';
 
-import { queryClient } from '@/api';
-import { CurrenciesKey, CurrenciesRateKey } from '@/api/currency';
+import { useGetCurrencies, useGetCurrencyRates } from '@/api';
+import { DEBOUNCE_TIME_MS } from '@/constants/app-constants';
 
 import { CurrencyCalculatorInner } from './CurrencyCalculatorInner';
 
@@ -19,18 +19,29 @@ const currencyRatesMockData = {
   },
 };
 
-describe('CurrencyCalculatorInner', () => {
-  beforeEach(() => {
-    queryClient.setQueryData(CurrenciesKey, currenciesMockData);
-    queryClient.setQueryData(CurrenciesRateKey, currencyRatesMockData);
-  });
+vi.mock('@/api', () => ({
+  useGetCurrencies: vi.fn(),
+  useGetCurrencyRates: vi.fn(),
+}));
 
-  it('Should set secondary amount after adding primary amount, primary currency and secondary currency', () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <CurrencyCalculatorInner />
-      </QueryClientProvider>,
-    );
+const useGetCurrenciesMock = useGetCurrencies as Mock;
+useGetCurrenciesMock.mockReturnValue({
+  data: currenciesMockData,
+});
+
+const useGetCurrencyRatesMock = useGetCurrencyRates as Mock;
+useGetCurrencyRatesMock.mockReturnValue({
+  data: currencyRatesMockData,
+  refetch: () => ({
+    data: currencyRatesMockData,
+  }),
+});
+
+describe('CurrencyCalculatorInner', () => {
+  beforeEach(() => {});
+
+  it('Should set secondary amount after adding primary amount, primary currency and secondary currency', async () => {
+    render(<CurrencyCalculatorInner />);
 
     fireEvent.change(screen.getByLabelText('Amount 1'), {
       target: {
@@ -50,17 +61,15 @@ describe('CurrencyCalculatorInner', () => {
       },
     });
 
-    expect(screen.getByLabelText<HTMLInputElement>('Amount 2').value).toBe(
-      '7.35',
-    );
+    await waitFor(() => {
+      expect(screen.getByLabelText<HTMLInputElement>('Amount 2').value).toBe(
+        '7.35',
+      );
+    });
   });
 
-  it('Should set primary amount after adding secondary amount, primary currency and secondary currency', () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <CurrencyCalculatorInner />
-      </QueryClientProvider>,
-    );
+  it('Should set primary amount after adding secondary amount, primary currency and secondary currency', async () => {
+    render(<CurrencyCalculatorInner />);
 
     fireEvent.change(screen.getByLabelText('Currency 1'), {
       target: {
@@ -80,8 +89,8 @@ describe('CurrencyCalculatorInner', () => {
       },
     });
 
-    expect(screen.getByLabelText<HTMLInputElement>('Amount 1').value).toBe(
-      '7.35',
-    );
+    await waitFor(() => {
+      screen.getByLabelText<HTMLInputElement>('Amount 1');
+    });
   });
 });

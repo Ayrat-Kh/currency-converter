@@ -1,6 +1,7 @@
 import { type ButtonHTMLAttributes, type FC } from 'react';
 
 import { useGetCurrencyRates } from '@/api';
+import { Text } from '@/components/ui';
 import { formatNumber } from '@/utils';
 
 import classes from './Summary.module.css';
@@ -29,7 +30,7 @@ export const Summary: FC<SummaryProps> = ({
   if (secondaryCurrency === '' || mainCurrency === '') {
     return (
       <div className={totalClasses}>
-        <p>Please select currencies</p>
+        <Text>Please select currencies</Text>
       </div>
     );
   }
@@ -37,7 +38,7 @@ export const Summary: FC<SummaryProps> = ({
   if (isNaN(secondaryAmount) || isNaN(mainAmount)) {
     return (
       <div className={totalClasses}>
-        <p>Please select amount</p>
+        <Text>Please select amount</Text>
       </div>
     );
   }
@@ -45,21 +46,20 @@ export const Summary: FC<SummaryProps> = ({
   if (isRefetchingCurrencies) {
     return (
       <div className={totalClasses}>
-        <p>Please wait while updating rates</p>
+        <Text>Please wait while updating rates</Text>
       </div>
     );
   }
 
   return (
     <div className={totalClasses}>
-      <p>
+      <Text>
         {formatNumber(mainAmount)} {mainCurrency} Equals
-      </p>
-      <b>
-        <p>
-          {formatNumber(secondaryAmount)} {secondaryCurrency}
-        </p>
-      </b>
+      </Text>
+
+      <Text kind="bold">
+        {formatNumber(secondaryAmount)} {secondaryCurrency}
+      </Text>
     </div>
   );
 };

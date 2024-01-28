@@ -1,5 +1,10 @@
 import cn from 'classnames';
-import { type ChangeEventHandler, type FC, useId } from 'react';
+import {
+  type ChangeEventHandler,
+  type FC,
+  type HTMLAttributes,
+  useId,
+} from 'react';
 
 import classes from './Select.module.css';
 import { Text } from './Text';
@@ -7,7 +12,7 @@ import { Text } from './Text';
 type SelectOption = { label: string; value: string }; // for simplicity restricted string type, ideally it should be generic type
 
 export type SelectProps = Omit<
-  React.LabelHTMLAttributes<HTMLLabelElement>,
+  HTMLAttributes<HTMLSelectElement>,
   'onChange'
 > & {
   label: string;
@@ -45,7 +50,7 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Text className={classes['select-label']} htmlFor={inputId} {...rest}>
+      <Text as="label" className={classes['select-label']} htmlFor={inputId}>
         {label}
       </Text>
 
@@ -53,6 +58,7 @@ export const Select: FC<SelectProps> = ({
         id={inputId}
         value={selected}
         className={cn(selectClassNames)}
+        {...rest}
         onChange={handleChange}
       >
         <option hidden disabled defaultValue=""></option>

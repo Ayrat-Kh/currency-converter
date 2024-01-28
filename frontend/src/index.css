@@ -11,6 +11,7 @@
   --text-primary: black;
   --text-secondary: grey;
   --text-tertiary: #0588f0;
+  --text-error: red;
 
   --border-primary: black;
   --border-secondary: grey;
@@ -22,6 +23,7 @@
   --text-base: 16px;
   --text-base1: 14px;
   --text-base2: 12px;
+  --text-h1: 24px;
 }
 
 * {

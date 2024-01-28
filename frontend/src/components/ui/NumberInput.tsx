@@ -6,11 +6,17 @@ import { getNormalizedNumberFromString } from '@/utils';
 import classes from './NumberInput.module.css';
 import { Text } from './Text';
 
+type NumberInputVariant = 'large';
+
+const variantClasses: Record<NumberInputVariant, string> = {
+  large: 'input-large',
+};
+
 type NumberInputProps = Omit<
   React.LabelHTMLAttributes<HTMLInputElement>,
   'value' | 'onChange'
 > & {
-  variant?: 'large'; // add spec for a small, sm
+  variant?: NumberInputVariant; // add spec for a small, sm
   label: string;
   value: number;
   maximumFractionDigits?: number;
@@ -30,7 +36,11 @@ export const NumberInput: FC<NumberInputProps> = ({
 
   // external className only allowed to add margins by parent
   // in any other cases label component should design itself
-  const totalClasses = cn(classes['input-container'], className);
+  const totalClasses = cn(
+    classes['input-container'],
+    variantClasses[variant],
+    className,
+  );
 
   const inputClassNames: unknown[] = [classes.input];
   switch (variant) {
@@ -48,7 +58,7 @@ export const NumberInput: FC<NumberInputProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Text className={classes['input-label']} htmlFor={inputId}>
+      <Text as="label" className={classes['input-label']} htmlFor={inputId}>
         {label}
       </Text>
       <input

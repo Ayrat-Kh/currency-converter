@@ -12,13 +12,14 @@ const variantClasses: Record<TextVariant, string> = {
   h1: 'text-h1',
 };
 
-type TextColor = 'primary' | 'secondary' | 'tertiary' | 'error';
+type TextColor = 'primary' | 'secondary' | 'tertiary' | 'error' | 'white';
 
 const colorClasses: Record<TextColor, string> = {
-  primary: 'text-error',
+  primary: 'text-primary',
   secondary: 'text-secondary',
   tertiary: 'text-tertiary',
   error: 'text-error',
+  white: 'text-white',
 };
 
 type TextKind = 'normal' | 'semibold' | 'bold';
@@ -55,9 +56,9 @@ export const Text: FC<TextProps> = ({
   // in any other cases label component should design itself
   const totalClasses = [
     classes.label,
-    variantClasses[variant],
-    colorClasses[color],
-    kindClasses[kind],
+    classes[variantClasses[variant]],
+    classes[colorClasses[color]],
+    classes[kindClasses[kind]],
     className,
   ];
 

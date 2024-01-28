@@ -38,16 +38,14 @@ export const NumberInput: FC<NumberInputProps> = ({
   // in any other cases label component should design itself
   const totalClasses = cn(
     classes['input-container'],
-    variantClasses[variant],
+
     className,
   );
 
-  const inputClassNames: unknown[] = [classes.input];
-  switch (variant) {
-    case 'large':
-    default:
-      inputClassNames.push(classes['input-large']);
-  }
+  const inputClassNames: unknown[] = [
+    classes.input,
+    classes[variantClasses[variant]],
+  ];
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (ev) => {
     const val = getNormalizedNumberFromString(ev.target.value, {
@@ -58,7 +56,13 @@ export const NumberInput: FC<NumberInputProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Text as="label" className={classes['input-label']} htmlFor={inputId}>
+      <Text
+        as="label"
+        color="secondary"
+        variant="base2"
+        className={classes['input-label']}
+        htmlFor={inputId}
+      >
         {label}
       </Text>
       <input
@@ -67,6 +71,7 @@ export const NumberInput: FC<NumberInputProps> = ({
         className={cn(inputClassNames)}
         value={value || ''}
         onChange={handleChange}
+        data-1p-ignore={true}
         {...restInputProps}
       />
     </div>

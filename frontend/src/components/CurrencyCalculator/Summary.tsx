@@ -30,14 +30,14 @@ export const Summary: FC<SummaryProps> = ({
   if (secondaryCurrency === '' || mainCurrency === '') {
     return (
       <div className={totalClasses}>
-        <Text>Please select currencies</Text>
+        <Text color="white">Please select currencies</Text>
       </div>
     );
   }
 
   if (isNaN(secondaryAmount) || isNaN(mainAmount)) {
     return (
-      <div className={totalClasses}>
+      <div color="white" className={totalClasses}>
         <Text>Please select amount</Text>
       </div>
     );
@@ -45,7 +45,7 @@ export const Summary: FC<SummaryProps> = ({
 
   if (isRefetchingCurrencies) {
     return (
-      <div className={totalClasses}>
+      <div color="white" className={totalClasses}>
         <Text>Please wait while updating rates</Text>
       </div>
     );
@@ -53,11 +53,11 @@ export const Summary: FC<SummaryProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Text>
+      <Text color="white">
         {formatNumber(mainAmount)} {mainCurrency} Equals
       </Text>
 
-      <Text kind="bold">
+      <Text kind="bold" color="white">
         {formatNumber(secondaryAmount)} {secondaryCurrency}
       </Text>
     </div>

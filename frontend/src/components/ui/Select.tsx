@@ -50,7 +50,13 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Text as="label" className={classes['select-label']} htmlFor={inputId}>
+      <Text
+        as="label"
+        color="secondary"
+        variant="base2"
+        className={classes['select-label']}
+        htmlFor={inputId}
+      >
         {label}
       </Text>
 

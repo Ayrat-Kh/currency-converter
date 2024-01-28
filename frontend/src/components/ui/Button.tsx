@@ -21,7 +21,11 @@ export const Button: FC<ButtonProps> = ({
 }) => {
   // external className only allowed to add margins by parent
   // in any other cases label component should design itself
-  const totalClasses = [classes['button'], variantClasses[variant], className];
+  const totalClasses = [
+    classes['button'],
+    classes[variantClasses[variant]],
+    className,
+  ];
 
   return <button className={cn(totalClasses)} {...props} />;
 };

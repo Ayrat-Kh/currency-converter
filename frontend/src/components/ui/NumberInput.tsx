@@ -68,7 +68,7 @@ export const NumberInput: FC<NumberInputProps> = ({
       <input
         inputMode="decimal"
         id={inputId}
-        type={'number'}
+        type="number"
         className={cn(inputClassNames)}
         value={value || ''}
         onChange={handleChange}

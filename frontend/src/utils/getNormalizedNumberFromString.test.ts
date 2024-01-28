@@ -9,9 +9,11 @@ describe('getNormalizedNumberFromString', () => {
     ).toBeCloseTo(43.42);
   });
 
-  it('should convert successfully', () => {
+  it('should convert successfully and ignore letter and symbols', () => {
     expect(
-      getNormalizedNumberFromString('43.42', { maximumFractionDigits: 2 }),
+      getNormalizedNumberFromString('43.42.423423', {
+        maximumFractionDigits: 2,
+      }),
     ).toBeCloseTo(43.42);
   });
 });

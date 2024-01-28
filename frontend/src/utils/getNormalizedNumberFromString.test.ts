@@ -8,4 +8,10 @@ describe('getNormalizedNumberFromString', () => {
       getNormalizedNumberFromString('43.4234', { maximumFractionDigits: 2 }),
     ).toBeCloseTo(43.42);
   });
+
+  it('should convert successfully', () => {
+    expect(
+      getNormalizedNumberFromString('43.42', { maximumFractionDigits: 2 }),
+    ).toBeCloseTo(43.42);
+  });
 });

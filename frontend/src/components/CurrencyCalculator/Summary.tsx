@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { type ButtonHTMLAttributes, type FC } from 'react';
 
 import { useGetCurrencyRates } from '@/api';
@@ -16,6 +17,22 @@ type SummaryProps = Pick<
   secondaryAmount: number;
 };
 
+export const SummaryLoader: FC = () => {
+  const { isRefetching: isRefetchingCurrencies } = useGetCurrencyRates();
+
+  if (!isRefetchingCurrencies) {
+    return null;
+  }
+
+  return (
+    <img
+      src="/loader-icon.svg"
+      alt="Loader icon"
+      className={classes['summary-loader']}
+    />
+  );
+};
+
 export const Summary: FC<SummaryProps> = ({
   className,
   mainAmount,
@@ -23,17 +40,7 @@ export const Summary: FC<SummaryProps> = ({
   secondaryAmount,
   secondaryCurrency,
 }) => {
-  const { isRefetching: isRefetchingCurrencies } = useGetCurrencyRates();
-
-  const totalClasses = `${classes['summary-container']} ${className}`;
-
-  if (isRefetchingCurrencies) {
-    return (
-      <div className={totalClasses}>
-        <Text color="white">Please wait while updating rates</Text>
-      </div>
-    );
-  }
+  const totalClasses = cn(classes['summary-container'], className);
 
   if (
     secondaryCurrency === '' ||
@@ -50,13 +57,19 @@ export const Summary: FC<SummaryProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Text color="white">
+      <Text color="white" className={classes['summary-main_currency']}>
         {formatNumber(mainAmount)} {mainCurrency} Equals
       </Text>
 
-      <Text kind="bold" color="white">
+      <Text
+        kind="bold"
+        color="white"
+        className={classes['summary-secondary_currency']}
+      >
         {formatNumber(secondaryAmount)} {secondaryCurrency}
       </Text>
+
+      <SummaryLoader />
     </div>
   );
 };

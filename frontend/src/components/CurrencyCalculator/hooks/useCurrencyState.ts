@@ -30,7 +30,7 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   const [fromAmount, setFromAmount] = useState<number>(0);
   const [fromCurrency, setFromCurrency] = useState('');
 
-  const updateValue = useDebounceHandler<
+  const exchangeValueAsync = useDebounceHandler<
     (request: ExchangeDebounceParams, updateFrom: boolean) => Promise<void>
   >(async (request: ExchangeDebounceParams, updateFrom: boolean) => {
     if (!request.fromCurrency || !request.toCurrency || !request.fromValue) {
@@ -57,7 +57,7 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   const handleFromAmountChange = async (fromValue: number) => {
     setFromAmount(fromValue);
 
-    updateValue(
+    exchangeValueAsync(
       {
         fromValue,
         fromCurrency,
@@ -70,7 +70,7 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   const handleToAmountChange = async (value: number) => {
     setToAmount(value);
 
-    updateValue(
+    exchangeValueAsync(
       {
         fromValue: value,
         fromCurrency: toCurrency,
@@ -83,7 +83,7 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   const handleFromCurrencyChange = async (currency: string) => {
     setFromCurrency(currency);
 
-    updateValue(
+    exchangeValueAsync(
       {
         fromValue: fromAmount,
         fromCurrency: currency,
@@ -96,7 +96,7 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   const handleToCurrencyChange = async (currency: string) => {
     setToCurrency(currency);
 
-    updateValue(
+    exchangeValueAsync(
       {
         fromValue: fromAmount,
         fromCurrency,

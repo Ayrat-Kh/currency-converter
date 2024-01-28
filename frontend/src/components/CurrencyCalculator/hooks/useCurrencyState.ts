@@ -27,7 +27,7 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
 
   const [toAmount, setToAmount] = useState<number>(NaN);
   const [toCurrency, setToCurrency] = useState('');
-  const [fromAmount, setFromAmount] = useState<number>(0);
+  const [fromAmount, setFromAmount] = useState<number>(NaN);
   const [fromCurrency, setFromCurrency] = useState('');
 
   const exchangeValueAsync = useDebounceHandler(

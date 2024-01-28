@@ -66,6 +66,7 @@ export const NumberInput: FC<NumberInputProps> = ({
         {label}
       </Text>
       <input
+        inputMode="numeric"
         id={inputId}
         type={'number'}
         className={cn(inputClassNames)}

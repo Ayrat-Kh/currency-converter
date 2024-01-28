@@ -48,7 +48,7 @@ const SummaryInner: FC<SummaryProps> = ({
   ) {
     return (
       <div className={classes['summary-main_currency']}>
-        <Text light="white">Please fill the form</Text>
+        <Text color="light">Please fill the form</Text>
       </div>
     );
   }

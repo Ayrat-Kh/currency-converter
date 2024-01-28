@@ -59,7 +59,7 @@ describe('CurrencyCalculatorContainer', () => {
     render(<CurrencyCalculatorContainer />);
 
     expect(
-      screen.getByText<HTMLInputElement>("Couldn't fetch currency rates.", {
+      screen.getByText<HTMLInputElement>("Couldn't fetch currencies.", {
         exact: false,
       }),
     ).toBeTruthy();

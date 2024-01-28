@@ -99,8 +99,8 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
     updateValue(
       {
         fromValue: fromAmount,
-        fromCurrency: currency,
-        toCurrency: fromCurrency,
+        fromCurrency,
+        toCurrency: currency,
       },
       false,
     );

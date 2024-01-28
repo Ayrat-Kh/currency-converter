@@ -62,7 +62,7 @@ describe('CurrencyCalculatorInner', () => {
 
     await waitFor(() => {
       expect(screen.getByLabelText<HTMLInputElement>('Amount 2').value).toBe(
-        '7.35',
+        '0.54',
       );
     });
   });

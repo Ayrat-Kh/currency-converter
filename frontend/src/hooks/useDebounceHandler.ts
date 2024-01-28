@@ -16,7 +16,7 @@ export const useDebounceHandler = <
 
   useEffect(() => {
     return () => cancel();
-  }, []);
+  }, [cancel]);
 
   return debouncedFn;
 };

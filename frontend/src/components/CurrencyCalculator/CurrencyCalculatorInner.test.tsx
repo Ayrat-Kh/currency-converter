@@ -2,7 +2,6 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { type Mock, vi } from 'vitest';
 
 import { useGetCurrencies, useGetCurrencyRates } from '@/api';
-import { DEBOUNCE_TIME_MS } from '@/constants/app-constants';
 
 import { CurrencyCalculatorInner } from './CurrencyCalculatorInner';
 

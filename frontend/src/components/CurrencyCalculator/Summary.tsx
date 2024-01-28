@@ -1,5 +1,6 @@
 import { type ButtonHTMLAttributes, type FC } from 'react';
 
+import { useGetCurrencyRates } from '@/api';
 import { formatNumber } from '@/utils';
 
 import classes from './Summary.module.css';
@@ -21,6 +22,8 @@ export const Summary: FC<SummaryProps> = ({
   secondaryAmount,
   secondaryCurrency,
 }) => {
+  const { isRefetching: isRefetchingCurrencies } = useGetCurrencyRates();
+
   const totalClasses = `${classes['summary-container']} ${className}`;
 
   if (secondaryCurrency === '' || mainCurrency === '') {
@@ -35,6 +38,14 @@ export const Summary: FC<SummaryProps> = ({
     return (
       <div className={totalClasses}>
         <p>Please select amount</p>
+      </div>
+    );
+  }
+
+  if (isRefetchingCurrencies) {
+    return (
+      <div className={totalClasses}>
+        <p>Please wait while updating rates</p>
       </div>
     );
   }

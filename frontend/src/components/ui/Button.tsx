@@ -3,12 +3,23 @@ import { type ButtonHTMLAttributes, type FC } from 'react';
 
 import classes from './Select.module.css';
 
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: 'primary' | 'ghost';
+};
 
-export const Button: FC<ButtonProps> = ({ className, ...props }) => {
+export const Button: FC<ButtonProps> = ({
+  className,
+  variant = 'primary',
+  ...props
+}) => {
   // external className only allowed to add margins by parent
   // in any other cases label component should design itself
-  const totalClasses = cn([classes['button'], className]);
+  const totalClasses = [classes['button'], className];
 
-  return <button className={totalClasses} {...props} />;
+  switch (variant) {
+    case 'ghost':
+      totalClasses.push('button--ghosted');
+  }
+
+  return <button className={cn(totalClasses)} {...props} />;
 };

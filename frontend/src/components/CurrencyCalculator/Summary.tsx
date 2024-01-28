@@ -1,5 +1,8 @@
+import cn from 'classnames';
 import { type ButtonHTMLAttributes, type FC } from 'react';
 
+import { useGetCurrencies, useGetCurrencyRates } from '@/api';
+import { Text } from '@/components/ui';
 import { formatNumber } from '@/utils';
 
 import classes from './Summary.module.css';
@@ -14,41 +17,72 @@ type SummaryProps = Pick<
   secondaryAmount: number;
 };
 
-export const Summary: FC<SummaryProps> = ({
-  className,
-  mainAmount,
-  mainCurrency,
-  secondaryAmount,
-  secondaryCurrency,
-}) => {
-  const totalClasses = `${classes['summary-container']} ${className}`;
+export const SummaryLoader: FC = () => {
+  const { isRefetching: isRefetchingCurrencies } = useGetCurrencyRates();
+  const { isLoading: isCurrencyLoading } = useGetCurrencies();
 
-  if (secondaryCurrency === '' || mainCurrency === '') {
-    return (
-      <div className={totalClasses}>
-        <p>Please select currencies</p>
-      </div>
-    );
+  if (!isRefetchingCurrencies && !isCurrencyLoading) {
+    return null;
   }
 
-  if (isNaN(secondaryAmount) || isNaN(mainAmount)) {
+  return (
+    <div className={classes['summary-loader-wrapper']}>
+      <img
+        src="/loader-icon.svg"
+        alt="Loader icon"
+        className={classes['summary-loader']}
+      />
+    </div>
+  );
+};
+
+const SummaryInner: FC<SummaryProps> = ({
+  secondaryAmount,
+  secondaryCurrency,
+  mainAmount,
+  mainCurrency,
+}) => {
+  if (
+    secondaryCurrency === '' ||
+    mainCurrency === '' ||
+    isNaN(secondaryAmount) ||
+    isNaN(mainAmount)
+  ) {
     return (
-      <div className={totalClasses}>
-        <p>Please select amount</p>
+      <div className={classes['summary-main_currency']}>
+        <Text color="light">Please fill the form</Text>
       </div>
     );
   }
 
   return (
-    <div className={totalClasses}>
-      <p>
+    <>
+      <Text color="light" className={classes['summary-main_currency']}>
         {formatNumber(mainAmount)} {mainCurrency} Equals
-      </p>
-      <b>
-        <p>
-          {formatNumber(secondaryAmount)} {secondaryCurrency}
-        </p>
-      </b>
+      </Text>
+
+      <Text
+        kind="bold"
+        color="light"
+        className={classes['summary-secondary_currency']}
+      >
+        {formatNumber(secondaryAmount)} {secondaryCurrency}
+      </Text>
+    </>
+  );
+};
+
+export const Summary: FC<SummaryProps> = ({
+  className,
+  ...summaryInnerProps
+}) => {
+  const totalClasses = cn(classes['summary-container'], className);
+
+  return (
+    <div className={totalClasses}>
+      <SummaryInner {...summaryInnerProps} />
+
+      <SummaryLoader />
     </div>
   );
 };

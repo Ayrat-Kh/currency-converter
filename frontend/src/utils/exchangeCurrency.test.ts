@@ -7,6 +7,8 @@ const testRates = {
   rates: {
     AED: 4.000807,
     USD: 1.089277,
+    RUB: 95,
+    THB: 38.923689,
   },
 };
 
@@ -31,5 +33,27 @@ describe('exchangeCurrency', () => {
         fromValue: 7.35,
       }),
     ).toBeCloseTo(2);
+  });
+
+  it('should convert currency from eur to rub', () => {
+    expect(
+      exchangeCurrency({
+        fromCurrency: 'EUR',
+        toCurrency: 'RUB',
+        rates: testRates,
+        fromValue: 1,
+      }),
+    ).toBeCloseTo(95);
+  });
+
+  it('should convert currency from usd to thai', () => {
+    expect(
+      exchangeCurrency({
+        fromCurrency: 'USD',
+        toCurrency: 'THB',
+        rates: testRates,
+        fromValue: 1,
+      }),
+    ).toBeCloseTo(35.73);
   });
 });

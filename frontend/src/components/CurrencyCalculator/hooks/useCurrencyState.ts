@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
 import { useGetCurrencyRates } from '@/api';
+import { DEBOUNCE_TIME_MS } from '@/constants/app-constants';
+import { useDebounceHandler } from '@/hooks';
 import { exchangeCurrency } from '@/utils';
+import { ExchangeCurrencyParams } from '@/utils';
 
 type CurrencyState = {
   fromAmount: number;
@@ -17,97 +20,107 @@ type CurrencyStateHandlers = {
   handleToCurrencyChange: (currency: string) => void;
 };
 
-const defaultCurrencyState: CurrencyState = {
-  fromAmount: 0,
-  fromCurrency: '',
-  toAmount: 0,
-  toCurrency: '',
-};
+type ExchangeDebounceParams = Omit<ExchangeCurrencyParams, 'rates'>;
 
 export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
-  const { data: rates, isSuccess } = useGetCurrencyRates();
+  const { refetch: refetchCurrencyRates } = useGetCurrencyRates();
 
-  const [currencyState, setCurrencyState] =
-    useState<CurrencyState>(defaultCurrencyState);
+  const [toAmount, setToAmount] = useState<number>(NaN);
+  const [toCurrency, setToCurrency] = useState('');
+  const [fromAmount, setFromAmount] = useState<number>(NaN);
+  const [fromCurrency, setFromCurrency] = useState('');
 
-  const handleFromAmountChange = (value: number) => {
-    if (!isSuccess) {
-      return;
+  const exchangeValueAsync = useDebounceHandler(
+    async (request: ExchangeDebounceParams, updateFrom: boolean) => {
+      if (!request.fromCurrency || !request.toCurrency || !request.fromValue) {
+        return;
+      }
+
+      const { data: rates } = await refetchCurrencyRates();
+      if (!rates) {
+        return;
+      }
+
+      const exchangedValue = exchangeCurrency({
+        ...request,
+        rates,
+      });
+
+      if (updateFrom) {
+        setFromAmount(exchangedValue);
+      } else {
+        setToAmount(exchangedValue);
+      }
+    },
+    DEBOUNCE_TIME_MS,
+  );
+
+  const handleFromAmountChange = async (fromValue: number) => {
+    setFromAmount(fromValue);
+    if (!isFinite(fromValue)) {
+      setToAmount(NaN);
     }
 
-    const exchangedValue = exchangeCurrency({
-      fromValue: value,
-      fromCurrency: currencyState.fromCurrency,
-      toCurrency: currencyState.toCurrency,
-      rates,
-    });
-
-    setCurrencyState((prev) => ({
-      ...prev,
-      fromAmount: value,
-      toAmount: exchangedValue,
-    }));
+    exchangeValueAsync(
+      {
+        fromValue,
+        fromCurrency,
+        toCurrency,
+      },
+      false,
+    );
   };
 
-  const handleToAmountChange = (value: number) => {
-    if (!isSuccess) {
-      return;
+  const handleToAmountChange = async (value: number) => {
+    setToAmount(value);
+
+    if (!isFinite(value)) {
+      setFromAmount(NaN);
     }
 
-    const exchangedValue = exchangeCurrency({
-      fromValue: value,
-      fromCurrency: currencyState.toCurrency,
-      toCurrency: currencyState.fromCurrency,
-      rates,
-    });
-
-    setCurrencyState((prev) => ({
-      ...prev,
-      fromAmount: exchangedValue,
-      toAmount: value,
-    }));
+    exchangeValueAsync(
+      {
+        fromValue: value,
+        fromCurrency: toCurrency,
+        toCurrency: fromCurrency,
+      },
+      true,
+    );
   };
 
-  const handleFromCurrencyChange = (currency: string) => {
-    if (!isSuccess) {
-      return;
-    }
+  const handleFromCurrencyChange = async (currency: string) => {
+    setFromCurrency(currency);
 
-    const exchangedValue = exchangeCurrency({
-      fromValue: currencyState.fromAmount,
-      fromCurrency: currency,
-      toCurrency: currencyState.toCurrency,
-      rates,
-    });
-
-    setCurrencyState((prev) => ({
-      ...prev,
-      fromCurrency: currency,
-      toAmount: exchangedValue,
-    }));
+    exchangeValueAsync(
+      {
+        fromValue: fromAmount,
+        fromCurrency: currency,
+        toCurrency,
+      },
+      false,
+    );
   };
 
-  const handleToCurrencyChange = (currency: string) => {
-    if (!isSuccess) {
-      return;
-    }
+  const handleToCurrencyChange = async (currency: string) => {
+    setToCurrency(currency);
 
-    const exchangedValue = exchangeCurrency({
-      fromValue: currencyState.fromAmount,
-      fromCurrency: currency,
-      toCurrency: currencyState.fromCurrency,
-      rates,
-    });
-
-    setCurrencyState((prev) => ({
-      ...prev,
-      toCurrency: currency,
-      toAmount: exchangedValue,
-    }));
+    exchangeValueAsync(
+      {
+        fromValue: fromAmount,
+        fromCurrency,
+        toCurrency: currency,
+      },
+      false,
+    );
   };
 
   return [
-    currencyState,
+    {
+      fromAmount,
+      fromCurrency,
+      toAmount,
+      toCurrency,
+    },
     {
       handleFromAmountChange,
       handleToAmountChange,

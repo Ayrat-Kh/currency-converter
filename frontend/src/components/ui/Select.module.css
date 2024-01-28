@@ -1,15 +1,24 @@
 .select-container {
-  background-color: white;
-  border: 1px solid var(--border-secondary);
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  padding: 8px 12px;
+  position: relative;
 }
 
 .select {
-  position: relative;
-  border: none;
-  font-size: var(--base);
+  border: 1px solid var(--border-secondary);
+  border-radius: 4px;
+  background-color: var(--bg-white);
+  padding: 3px;
+  padding-top: 16px;
+  padding-bottom: 4px;
   width: 100%;
+  font-size: var(--text-base);
+}
+
+.select-large {
+  height: 56px;
+}
+
+.select-label {
+  position: absolute;
+  top: 4px;
+  left: 8px;
 }

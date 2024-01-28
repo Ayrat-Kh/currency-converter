@@ -19,4 +19,27 @@ describe('NumberInput', () => {
 
     expect(handleChangeMock).toHaveBeenCalledWith(23.23);
   });
+
+  it('Should show . in the display but number should remain valid', () => {
+    const handleChangeMock = vi.fn();
+
+    render(
+      <NumberInput label="Number" value={23} onChange={handleChangeMock} />,
+    );
+
+    fireEvent.focus(screen.getByLabelText('Number'));
+    fireEvent.change(screen.getByLabelText('Number'), {
+      target: {
+        value: '23.',
+      },
+    });
+
+    expect(handleChangeMock).toHaveBeenCalledWith(23);
+    expect(screen.getByDisplayValue('23.')).toBeTruthy();
+
+    fireEvent.blur(screen.getByLabelText('Number'));
+
+    expect(handleChangeMock).toHaveBeenCalledTimes(1);
+    expect(screen.getByDisplayValue('23')).toBeTruthy();
+  });
 });

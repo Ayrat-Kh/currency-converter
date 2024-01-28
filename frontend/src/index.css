@@ -1,7 +1,7 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
   font-weight: 400;
+  line-height: 1.5;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -11,6 +11,12 @@
   --text-primary: black;
   --text-secondary: grey;
   --text-tertiary: #0588f0;
+  --text-error: red;
+  --text-light: white;
+
+  --text-font-normal: 400;
+  --text-font-semibold: 500;
+  --text-font-bold: 700;
 
   --border-primary: black;
   --border-secondary: grey;
@@ -18,13 +24,16 @@
   --bg-primary: #ffe770;
   --bg-secondary: grey;
   --bg-tertiary: #0588f0;
+  --bg-white: white;
 
   --text-base: 16px;
   --text-base1: 14px;
   --text-base2: 12px;
+  --text-h1: 24px;
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   min-width: 0;

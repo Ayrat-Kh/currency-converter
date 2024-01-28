@@ -1,10 +1,50 @@
 .summary-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 12px;
-  color: white;
-  background-color: var(--bg-tertiary);
+  display: grid;
+
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 30px;
+  grid-template-areas:
+    'main_currency loader'
+    'secondary_currency loader';
+
+  align-items: center;
   border-radius: 4px;
-  min-height: 72px;
+  background-color: var(--bg-tertiary);
+  padding: 12px;
+  height: 72px;
+  color: var(--text-light);
+}
+
+.summary-main_currency {
+  grid-area: main_currency;
+}
+.summary-secondary_currency {
+  grid-area: secondary_currency;
+}
+
+.summary-loader-wrapper {
+  display: flex;
+  grid-area: loader;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+}
+
+.summary-loader {
+  animation-duration: 3000ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-name: spin-loader;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes spin-loader {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

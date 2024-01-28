@@ -3,7 +3,7 @@ import { type GetCurrencyRatesResponse } from '@/api';
 import { getNormalizedNumber } from './getNormalizedNumber';
 
 // for now, assuming we always have currency on the list
-type ExchangeCurrencyParams = {
+export type ExchangeCurrencyParams = {
   fromValue: number;
   fromCurrency: string;
   toCurrency: string;
@@ -27,7 +27,7 @@ export const exchangeCurrency = ({
   }
 
   let toRate = 1;
-  if (fromCurrency !== rates.base) {
+  if (toCurrency !== rates.base) {
     toRate = rates.rates[toCurrency];
   }
 

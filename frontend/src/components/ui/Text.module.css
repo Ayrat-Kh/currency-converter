@@ -1,0 +1,46 @@
+.text-base {
+  font-size: var(--text-base);
+}
+
+.text-base1 {
+  font-size: var(--text-base1);
+}
+
+.text-base2 {
+  font-size: var(--text-base2);
+}
+
+.text-h1 {
+  font-size: var(--text-h1);
+}
+
+.text-error {
+  color: var(--text-error);
+}
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+.text-secondary {
+  color: var(--text-secondary);
+}
+.text-primary {
+  color: var(--text-primary);
+}
+.text-light {
+  color: var(--text-light);
+}
+
+.text-normal {
+  font-weight: var(--text-font-normal);
+}
+.text-semibold {
+  font-weight: var(--text-font-semibold);
+}
+.text-bold {
+  font-weight: var(--text-font-bold);
+}
+
+.text-link {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

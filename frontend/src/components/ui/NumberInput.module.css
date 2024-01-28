@@ -1,16 +1,24 @@
 .input-container {
-  
-  background-color: white;
-  border: 1px solid var(--border-secondary);
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  padding: 8px 12px;
+  position: relative;
 }
 
 .input {
-  border: none;
+  border: 1px solid var(--border-secondary);
+  border-radius: 4px;
+  background-color: var(--bg-white);
+  padding: 7px;
+  padding-top: 16px;
+  padding-bottom: 4px;
+  width: 100%;
   font-size: var(--text-base);
-  margin-top: 2px;
-  outline: none;
+}
+
+.input-large {
+  height: 56px;
+}
+
+.input-label {
+  position: absolute;
+  top: 4px;
+  left: 8px;
 }

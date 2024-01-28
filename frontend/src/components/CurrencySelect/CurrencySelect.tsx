@@ -1,8 +1,8 @@
 import { type FC } from 'react';
 
 import { useGetCurrencies } from '@/api';
-
-import { Select, type SelectProps } from '../ui';
+import { Select, type SelectProps } from '@/components/ui';
+import { mapCurrencyOptionResponse } from '@/utils';
 
 type CurrencySelectProps = Omit<SelectProps, 'selected' | 'options'> & {
   selectedCurrencyCode: string;
@@ -15,16 +15,10 @@ export const CurrencySelect: FC<CurrencySelectProps> = ({
 }) => {
   const { data } = useGetCurrencies();
 
-  const optionObject = data ?? {};
-  const options = Object.keys(optionObject).map((key) => ({
-    label: optionObject[key],
-    value: key,
-  }));
-
   return (
     <Select
       selected={selectedCurrencyCode}
-      options={options}
+      options={mapCurrencyOptionResponse(data)}
       {...rest}
       onChange={onChange}
     />

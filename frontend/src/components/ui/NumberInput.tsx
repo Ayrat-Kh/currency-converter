@@ -1,5 +1,11 @@
 import cn from 'classnames';
-import { type ChangeEventHandler, type FC, useId, useState } from 'react';
+import {
+  type ChangeEventHandler,
+  type FC,
+  FocusEventHandler,
+  useId,
+  useState,
+} from 'react';
 
 import { getNormalizedNumberFromString } from '@/utils';
 
@@ -68,9 +74,10 @@ export const NumberInput: FC<NumberInputProps> = ({
     setIsActive(true);
   };
 
-  const handleBlur = () => {
+  const handleBlur: FocusEventHandler<HTMLInputElement> = (ev) => {
     setIsActive(false);
     setStringView('');
+    restInputProps.onBlur?.(ev);
   };
 
   // in order to show the right value the component should prioritize the most fresh value:

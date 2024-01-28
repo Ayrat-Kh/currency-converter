@@ -57,6 +57,9 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
 
   const handleFromAmountChange = async (fromValue: number) => {
     setFromAmount(fromValue);
+    if (!isFinite(fromValue)) {
+      setToAmount(NaN);
+    }
 
     exchangeValueAsync(
       {
@@ -70,6 +73,10 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
 
   const handleToAmountChange = async (value: number) => {
     setToAmount(value);
+
+    if (!isFinite(value)) {
+      setFromAmount(NaN);
+    }
 
     exchangeValueAsync(
       {

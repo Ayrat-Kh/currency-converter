@@ -73,7 +73,7 @@ export const NumberInput: FC<NumberInputProps> = ({
         value={value || ''}
         onChange={handleChange}
         name="fakenumberinput"
-        pattern="\d*.\d"
+        pattern="\\d*.\\d"
         {...restInputProps}
       />
     </div>

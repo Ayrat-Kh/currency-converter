@@ -1,6 +1,7 @@
 .summary-container {
   display: grid;
 
+  grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 30px;
   grid-template-areas:
     'main_currency loader'
@@ -10,7 +11,7 @@
   border-radius: 4px;
   background-color: var(--bg-tertiary);
   padding: 12px;
-  min-height: 72px;
+  height: 72px;
   color: var(--text-light);
 }
 
@@ -20,8 +21,17 @@
 .summary-secondary_currency {
   grid-area: secondary_currency;
 }
-.summary-loader {
+
+.summary-loader-wrapper {
+  display: flex;
   grid-area: loader;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+}
+
+.summary-loader {
   animation-duration: 3000ms;
   animation-timing-function: linear;
   animation-iteration-count: infinite;

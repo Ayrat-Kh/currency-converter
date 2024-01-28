@@ -26,11 +26,13 @@ export const SummaryLoader: FC = () => {
   }
 
   return (
-    <img
-      src="/loader-icon.svg"
-      alt="Loader icon"
-      className={classes['summary-loader']}
-    />
+    <div className={classes['summary-loader-wrapper']}>
+      <img
+        src="/loader-icon.svg"
+        alt="Loader icon"
+        className={classes['summary-loader']}
+      />
+    </div>
   );
 };
 

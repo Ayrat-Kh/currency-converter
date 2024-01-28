@@ -2,7 +2,7 @@ import cn from 'classnames';
 import {
   type ChangeEventHandler,
   type FC,
-  FocusEventHandler,
+  type FocusEventHandler,
   useId,
   useState,
 } from 'react';

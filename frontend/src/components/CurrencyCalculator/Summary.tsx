@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { type ButtonHTMLAttributes, type FC } from 'react';
 
-import { useGetCurrencyRates } from '@/api';
+import { useGetCurrencies, useGetCurrencyRates } from '@/api';
 import { Text } from '@/components/ui';
 import { formatNumber } from '@/utils';
 
@@ -19,8 +19,9 @@ type SummaryProps = Pick<
 
 export const SummaryLoader: FC = () => {
   const { isRefetching: isRefetchingCurrencies } = useGetCurrencyRates();
+  const { isLoading: isCurrencyLoading } = useGetCurrencies();
 
-  if (!isRefetchingCurrencies) {
+  if (!isRefetchingCurrencies && !isCurrencyLoading) {
     return null;
   }
 
@@ -33,15 +34,12 @@ export const SummaryLoader: FC = () => {
   );
 };
 
-export const Summary: FC<SummaryProps> = ({
-  className,
-  mainAmount,
-  mainCurrency,
+const SummaryInner: FC<SummaryProps> = ({
   secondaryAmount,
   secondaryCurrency,
+  mainAmount,
+  mainCurrency,
 }) => {
-  const totalClasses = cn(classes['summary-container'], className);
-
   if (
     secondaryCurrency === '' ||
     mainCurrency === '' ||
@@ -49,14 +47,14 @@ export const Summary: FC<SummaryProps> = ({
     isNaN(mainAmount)
   ) {
     return (
-      <div className={totalClasses}>
+      <div className={classes['summary-main_currency']}>
         <Text color="white">Please fill the form</Text>
       </div>
     );
   }
 
   return (
-    <div className={totalClasses}>
+    <>
       <Text color="white" className={classes['summary-main_currency']}>
         {formatNumber(mainAmount)} {mainCurrency} Equals
       </Text>
@@ -68,6 +66,19 @@ export const Summary: FC<SummaryProps> = ({
       >
         {formatNumber(secondaryAmount)} {secondaryCurrency}
       </Text>
+    </>
+  );
+};
+
+export const Summary: FC<SummaryProps> = ({
+  className,
+  ...summaryInnerProps
+}) => {
+  const totalClasses = cn(classes['summary-container'], className);
+
+  return (
+    <div className={totalClasses}>
+      <SummaryInner {...summaryInnerProps} />
 
       <SummaryLoader />
     </div>

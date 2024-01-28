@@ -1,12 +1,16 @@
+import { useGetCurrencies } from '@/api';
 import { CurrencySelect } from '@/components/CurrencySelect';
 import { NumberInput } from '@/components/ui/NumberInput';
 
-import classes from './CurrencyCalculator.module.css';
+import classes from './CurrencyCalculatorInner.module.css';
 import { CurrencyRateRefetcher } from './CurrencyRateRefetcher';
+import { CurrencyRefetcher } from './CurrencyRefetcher';
 import { Summary } from './Summary';
 import { useCurrencyState } from './hooks/useCurrencyState';
 
 export const CurrencyCalculatorInner = () => {
+  const { isLoading: isLoadingCurrencies } = useGetCurrencies();
+
   const [
     currencyState,
     {
@@ -18,7 +22,7 @@ export const CurrencyCalculatorInner = () => {
   ] = useCurrencyState();
 
   return (
-    <div>
+    <>
       <div className={classes['calculator-container']}>
         <Summary
           mainAmount={currencyState.fromAmount}
@@ -34,6 +38,7 @@ export const CurrencyCalculatorInner = () => {
           onChange={handleFromAmountChange}
         />
         <CurrencySelect
+          disabled={isLoadingCurrencies}
           className={classes['calculator-first_cur_select']}
           label="Currency 1"
           selectedCurrencyCode={currencyState.fromCurrency}
@@ -46,6 +51,7 @@ export const CurrencyCalculatorInner = () => {
           onChange={handleToAmountChange}
         />
         <CurrencySelect
+          disabled={isLoadingCurrencies}
           className={classes['calculator-second_cur_select']}
           label="Currency 2"
           selectedCurrencyCode={currencyState.toCurrency}
@@ -53,6 +59,7 @@ export const CurrencyCalculatorInner = () => {
         />
       </div>
       <CurrencyRateRefetcher />
-    </div>
+      <CurrencyRefetcher />
+    </>
   );
 };

@@ -72,7 +72,7 @@ export const NumberInput: FC<NumberInputProps> = ({
         className={cn(inputClassNames)}
         value={value || ''}
         onChange={handleChange}
-        name="fakenumberinput"
+        name="fakenumberinput" // avoid password managers
         {...restInputProps}
       />
     </div>

@@ -2,7 +2,7 @@ import cn from 'classnames';
 import {
   type ChangeEventHandler,
   type FC,
-  type HTMLAttributes,
+  type SelectHTMLAttributes,
   useId,
 } from 'react';
 
@@ -18,7 +18,7 @@ const variantClasses: Record<SelectVariant, string> = {
 type SelectOption = { label: string; value: string }; // for simplicity restricted string type, ideally it should be generic type
 
 export type SelectProps = Omit<
-  HTMLAttributes<HTMLSelectElement>,
+  SelectHTMLAttributes<HTMLSelectElement>,
   'onChange'
 > & {
   label: string;

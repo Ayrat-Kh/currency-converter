@@ -39,3 +39,8 @@
 .text-bold {
   font-weight: var(--text-font-bold);
 }
+
+.text-link {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

@@ -8,6 +8,7 @@
   gap: 8px;
   background-color: var(--bg-primary);
   padding: 4px;
+  width: 100%;
 }
 
 .calculator-screen {

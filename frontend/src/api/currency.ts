@@ -27,7 +27,7 @@ const getCurrencies = async ({
 export const CurrenciesKey = ['currencies'];
 
 export const useGetCurrencies = () => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: CurrenciesKey,
     queryFn: getCurrencies,
   });

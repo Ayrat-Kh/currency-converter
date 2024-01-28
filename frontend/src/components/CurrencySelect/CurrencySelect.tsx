@@ -1,8 +1,7 @@
 import { type FC } from 'react';
 
 import { useGetCurrencies } from '@/api';
-
-import { Select, type SelectProps } from '../ui';
+import { Select, type SelectProps } from '@/components/ui';
 
 type CurrencySelectProps = Omit<SelectProps, 'selected' | 'options'> & {
   selectedCurrencyCode: string;
@@ -16,8 +15,8 @@ export const CurrencySelect: FC<CurrencySelectProps> = ({
   const { data } = useGetCurrencies();
 
   const optionObject = data ?? {};
-  const options = Object.keys(optionObject).map((key) => ({
-    label: optionObject[key],
+  const options = Object.entries(optionObject).map(([key, value]) => ({
+    label: value,
     value: key,
   }));
 

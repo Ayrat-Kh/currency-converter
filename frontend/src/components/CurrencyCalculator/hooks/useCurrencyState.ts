@@ -4,7 +4,7 @@ import { useGetCurrencyRates } from '@/api';
 import { DEBOUNCE_TIME_MS } from '@/constants/app-constants';
 import { useDebounceHandler } from '@/hooks';
 import { exchangeCurrency } from '@/utils';
-import { ExchangeCurrencyParams } from '@/utils/exchangeCurrency';
+import { ExchangeCurrencyParams } from '@/utils';
 
 type CurrencyState = {
   fromAmount: number;

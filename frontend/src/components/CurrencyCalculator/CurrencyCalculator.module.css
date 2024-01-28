@@ -1,13 +1,13 @@
 .calculator-container {
-  padding: 4px;
-  background-color: var(--bg-primary);
   display: grid;
-  gap: 8px;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     'total total'
     'amount-1 cur-select-1'
     'amount-2 cur-select-2';
+  gap: 8px;
+  background-color: var(--bg-primary);
+  padding: 4px;
 }
 
 .calculator-screen {

@@ -34,6 +34,7 @@ export const NumberInput: FC<NumberInputProps> = ({
 }) => {
   // this state only controls the value when it was changed
   const [stringView, setStringView] = useState('');
+  const [isActive, setIsActive] = useState(false);
   const inputId = useId();
 
   // external className only allowed to add margins by parent
@@ -62,6 +63,16 @@ export const NumberInput: FC<NumberInputProps> = ({
     onChange(number);
   };
 
+  const handleFocus = () => {
+    setStringView(isFinite(value) ? value.toString() : '');
+    setIsActive(true);
+  };
+
+  const handleBlur = () => {
+    setIsActive(false);
+    setStringView('');
+  };
+
   // in order to show the right value the component should prioritize the most fresh value:
   //  stringView - most priority, as it means that the user interacted with input
   //  value - props value, it means we show the value from parent and user hasn't interacted yet
@@ -72,7 +83,7 @@ export const NumberInput: FC<NumberInputProps> = ({
     displayValue = value.toString();
   }
 
-  if (stringView) {
+  if (isActive) {
     displayValue = stringView;
   }
 
@@ -93,6 +104,8 @@ export const NumberInput: FC<NumberInputProps> = ({
         className={cn(inputClassNames)}
         value={displayValue}
         onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         name="fakenumberinput" // avoid password managers
         {...restInputProps}
       />

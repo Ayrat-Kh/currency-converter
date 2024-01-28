@@ -2,6 +2,7 @@ import { CurrencySelect } from '@/components/CurrencySelect';
 import { NumberInput } from '@/components/ui/NumberInput';
 
 import classes from './CurrencyCalculator.module.css';
+import { CurrencyRateLoader } from './CurrencyRateLoader';
 import { Summary } from './Summary';
 import { useCurrencyState } from './hooks/useCurrencyState';
 
@@ -49,6 +50,7 @@ export const CurrencyCalculatorInner = () => {
         selectedCurrencyCode={currencyState.toCurrency}
         onChange={handleToCurrencyChange}
       />
+      <CurrencyRateLoader />
     </div>
   );
 };

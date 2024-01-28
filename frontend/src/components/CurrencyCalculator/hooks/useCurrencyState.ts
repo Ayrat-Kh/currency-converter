@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useGetCurrencyRates } from '@/api';
+import { DEBOUNCE_TIME_MS } from '@/constants/app-constants';
 import { useDebounceHandler } from '@/hooks';
 import { exchangeCurrency } from '@/utils';
 import { ExchangeCurrencyParams } from '@/utils/exchangeCurrency';
@@ -32,6 +33,10 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   const updateValue = useDebounceHandler<
     (request: ExchangeDebounceParams, updateFrom: boolean) => Promise<void>
   >(async (request: ExchangeDebounceParams, updateFrom: boolean) => {
+    if (!request.fromCurrency || !request.toCurrency || !request.fromValue) {
+      return;
+    }
+
     const { data: rates } = await refetchCurrencyRates();
     if (!rates) {
       return;
@@ -47,7 +52,7 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
     } else {
       setToAmount(exchangedValue);
     }
-  }, 1000);
+  }, DEBOUNCE_TIME_MS);
 
   const handleFromAmountChange = async (fromValue: number) => {
     setFromAmount(fromValue);
@@ -71,7 +76,7 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
         fromCurrency,
         toCurrency,
       },
-      false,
+      true,
     );
   };
 
@@ -93,11 +98,11 @@ export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
 
     updateValue(
       {
-        fromValue: toAmount,
+        fromValue: fromAmount,
         fromCurrency: currency,
         toCurrency: fromCurrency,
       },
-      true,
+      false,
     );
   };
 

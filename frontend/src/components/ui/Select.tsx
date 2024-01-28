@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import { type ChangeEventHandler, type FC, useId } from 'react';
 
-import { Label } from './Label';
 import classes from './Select.module.css';
+import { Text } from './Text';
 
 type SelectOption = { label: string; value: string }; // for simplicity restricted string type, ideally it should be generic type
 
@@ -45,9 +45,9 @@ export const Select: FC<SelectProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Label className={classes['select-label']} htmlFor={inputId} {...rest}>
+      <Text className={classes['select-label']} htmlFor={inputId} {...rest}>
         {label}
-      </Label>
+      </Text>
 
       <select
         id={inputId}

@@ -1,4 +1,4 @@
-export const debounce = <TFn extends (...args: Parameters<TFn>) => any>(
+export const debounce = <TFn extends (...args: Parameters<TFn>) => unknown>(
   fn: TFn,
   debounceTimeMs: number,
 ) => {

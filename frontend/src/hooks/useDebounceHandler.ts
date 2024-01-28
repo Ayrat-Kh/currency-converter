@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { debounce } from '@/utils/debounce';
 
 export const useDebounceHandler = <
-  TFn extends (...args: Parameters<TFn>) => any,
+  TFn extends (...args: Parameters<TFn>) => unknown,
 >(
   fn: TFn,
   debounceTime: number,

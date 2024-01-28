@@ -3,8 +3,8 @@ import { type ChangeEventHandler, type FC, useId } from 'react';
 
 import { getNormalizedNumberFromString } from '@/utils';
 
-import { Label } from './Label';
 import classes from './NumberInput.module.css';
+import { Text } from './Text';
 
 type NumberInputProps = Omit<
   React.LabelHTMLAttributes<HTMLInputElement>,
@@ -48,9 +48,9 @@ export const NumberInput: FC<NumberInputProps> = ({
 
   return (
     <div className={totalClasses}>
-      <Label className={classes['input-label']} htmlFor={inputId}>
+      <Text className={classes['input-label']} htmlFor={inputId}>
         {label}
-      </Label>
+      </Text>
       <input
         id={inputId}
         type={'number'}

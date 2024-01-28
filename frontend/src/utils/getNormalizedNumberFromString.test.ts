@@ -11,7 +11,7 @@ describe('getNormalizedNumberFromString', () => {
 
   it('should convert successfully and ignore letter and symbols', () => {
     expect(
-      getNormalizedNumberFromString('43.42.423423', {
+      getNormalizedNumberFromString('43,42,423423', {
         maximumFractionDigits: 2,
       }),
     ).toBeCloseTo(43.42);

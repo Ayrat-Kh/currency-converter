@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { type ChangeEventHandler, type FC, useId } from 'react';
+import { type ChangeEventHandler, type FC, useId, useState } from 'react';
 
 import { getNormalizedNumberFromString } from '@/utils';
 
@@ -32,6 +32,8 @@ export const NumberInput: FC<NumberInputProps> = ({
   onChange,
   ...restInputProps
 }) => {
+  // this state only controls the value when it was changed
+  const [stringView, setStringView] = useState('');
   const inputId = useId();
 
   // external className only allowed to add margins by parent
@@ -48,11 +50,31 @@ export const NumberInput: FC<NumberInputProps> = ({
   ];
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (ev) => {
-    const val = getNormalizedNumberFromString(ev.target.value, {
-      maximumFractionDigits,
-    });
-    onChange(val);
+    const { normalizedValue, number } = getNormalizedNumberFromString(
+      ev.target.value,
+      {
+        maximumFractionDigits,
+      },
+    );
+
+    setStringView(normalizedValue);
+
+    onChange(number);
   };
+
+  // in order to show the right value the component should prioritize the most fresh value:
+  //  stringView - most priority, as it means that the user interacted with input
+  //  value - props value, it means we show the value from parent and user hasn't interacted yet
+  //  empty otherwise
+  let displayValue = '';
+
+  if (isFinite(value)) {
+    displayValue = value.toString();
+  }
+
+  if (stringView) {
+    displayValue = stringView;
+  }
 
   return (
     <div className={totalClasses}>
@@ -68,9 +90,8 @@ export const NumberInput: FC<NumberInputProps> = ({
       <input
         inputMode="decimal"
         id={inputId}
-        type="number"
         className={cn(inputClassNames)}
-        value={value || ''}
+        value={displayValue}
         onChange={handleChange}
         name="fakenumberinput" // avoid password managers
         {...restInputProps}

@@ -66,14 +66,13 @@ export const NumberInput: FC<NumberInputProps> = ({
         {label}
       </Text>
       <input
-        inputMode="numeric"
+        inputMode="decimal"
         id={inputId}
         type={'number'}
         className={cn(inputClassNames)}
         value={value || ''}
         onChange={handleChange}
         name="fakenumberinput"
-        pattern="\\d*.\\d"
         {...restInputProps}
       />
     </div>

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import { useGetCurrencyRates } from '@/api';
+import { useDebounceHandler } from '@/hooks';
 import { exchangeCurrency } from '@/utils';
+import { ExchangeCurrencyParams } from '@/utils/exchangeCurrency';
 
 type CurrencyState = {
   fromAmount: number;
@@ -17,81 +19,95 @@ type CurrencyStateHandlers = {
   handleToCurrencyChange: (currency: string) => void;
 };
 
-const defaultCurrencyState: CurrencyState = {
-  fromAmount: 0,
-  fromCurrency: '',
-  toAmount: 0,
-  toCurrency: '',
-};
+type ExchangeDebounceParams = Omit<ExchangeCurrencyParams, 'rates'>;
 
 export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
-  const { data: rates } = useGetCurrencyRates();
+  const { refetch: refetchCurrencyRates } = useGetCurrencyRates();
 
-  const [currencyState, setCurrencyState] =
-    useState<CurrencyState>(defaultCurrencyState);
+  const [toAmount, setToAmount] = useState(0);
+  const [toCurrency, setToCurrency] = useState('');
+  const [fromAmount, setFromAmount] = useState(0);
+  const [fromCurrency, setFromCurrency] = useState('');
 
-  const handleFromAmountChange = (value: number) => {
+  const updateValue = useDebounceHandler<
+    (request: ExchangeDebounceParams, updateFrom: boolean) => Promise<void>
+  >(async (request: ExchangeDebounceParams, updateFrom: boolean) => {
+    const { data: rates } = await refetchCurrencyRates();
+    if (!rates) {
+      return;
+    }
+
     const exchangedValue = exchangeCurrency({
-      fromValue: value,
-      fromCurrency: currencyState.fromCurrency,
-      toCurrency: currencyState.toCurrency,
+      ...request,
       rates,
     });
 
-    setCurrencyState((prev) => ({
-      ...prev,
-      fromAmount: value,
-      toAmount: exchangedValue,
-    }));
+    if (updateFrom) {
+      setFromAmount(exchangedValue);
+    } else {
+      setToAmount(exchangedValue);
+    }
+  }, 1000);
+
+  const handleFromAmountChange = async (fromValue: number) => {
+    setFromAmount(fromValue);
+
+    updateValue(
+      {
+        fromValue,
+        fromCurrency: fromCurrency,
+        toCurrency: toCurrency,
+      },
+      false,
+    );
   };
 
-  const handleToAmountChange = (value: number) => {
-    const exchangedValue = exchangeCurrency({
-      fromValue: value,
-      fromCurrency: currencyState.toCurrency,
-      toCurrency: currencyState.fromCurrency,
-      rates,
-    });
+  const handleToAmountChange = async (value: number) => {
+    setToAmount(value);
 
-    setCurrencyState((prev) => ({
-      ...prev,
-      fromAmount: exchangedValue,
-      toAmount: value,
-    }));
+    updateValue(
+      {
+        fromValue: value,
+        fromCurrency,
+        toCurrency,
+      },
+      false,
+    );
   };
 
-  const handleFromCurrencyChange = (currency: string) => {
-    const exchangedValue = exchangeCurrency({
-      fromValue: currencyState.fromAmount,
-      fromCurrency: currency,
-      toCurrency: currencyState.toCurrency,
-      rates,
-    });
+  const handleFromCurrencyChange = async (currency: string) => {
+    setFromCurrency(currency);
 
-    setCurrencyState((prev) => ({
-      ...prev,
-      fromCurrency: currency,
-      toAmount: exchangedValue,
-    }));
+    updateValue(
+      {
+        fromValue: fromAmount,
+        fromCurrency: currency,
+        toCurrency: toCurrency,
+      },
+      false,
+    );
   };
 
-  const handleToCurrencyChange = (currency: string) => {
-    const exchangedValue = exchangeCurrency({
-      fromValue: currencyState.fromAmount,
-      fromCurrency: currency,
-      toCurrency: currencyState.fromCurrency,
-      rates,
-    });
+  const handleToCurrencyChange = async (currency: string) => {
+    setToCurrency(currency);
 
-    setCurrencyState((prev) => ({
-      ...prev,
-      toCurrency: currency,
-      toAmount: exchangedValue,
-    }));
+    updateValue(
+      {
+        fromValue: toAmount,
+        fromCurrency: currency,
+        toCurrency: fromCurrency,
+      },
+      true,
+    );
   };
 
   return [
-    currencyState,
+    {
+      fromAmount,
+      fromCurrency,
+      toAmount,
+      toCurrency,
+    },
     {
       handleFromAmountChange,
       handleToAmountChange,

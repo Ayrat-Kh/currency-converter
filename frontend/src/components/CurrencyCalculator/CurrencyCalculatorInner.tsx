@@ -1,11 +1,11 @@
+import { CurrencySelect } from '@/components/CurrencySelect';
 import { NumberInput } from '@/components/ui/NumberInput';
 
-import { CurrencySelect } from '../CurrencySelect';
 import classes from './CurrencyCalculator.module.css';
 import { Summary } from './Summary';
 import { useCurrencyState } from './hooks/useCurrencyState';
 
-export const CurrencyCalculator = () => {
+export const CurrencyCalculatorInner = () => {
   const [
     currencyState,
     {
@@ -26,7 +26,6 @@ export const CurrencyCalculator = () => {
         className={classes['calculator-screen']}
       />
       <NumberInput
-        isNumber
         label="Amount 1"
         value={currencyState.fromAmount}
         className={classes['calculator-first_amount']}
@@ -39,7 +38,6 @@ export const CurrencyCalculator = () => {
         onChange={handleFromCurrencyChange}
       />
       <NumberInput
-        isNumber
         label="Amount 2"
         value={currencyState.toAmount}
         className={classes['calculator-second_amount']}

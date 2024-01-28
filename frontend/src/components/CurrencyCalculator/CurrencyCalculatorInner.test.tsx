@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { queryClient } from '@/api';
 import { CurrenciesKey, CurrenciesRateKey } from '@/api/currency';
 
-import { CurrencyCalculator } from './CurrencyCalculator';
+import { CurrencyCalculatorInner } from './CurrencyCalculatorInner';
 
 const currenciesMockData = {
   AED: 'United Arab Emirates Dirham',
@@ -19,7 +19,7 @@ const currencyRatesMockData = {
   },
 };
 
-describe('CurrencyCalculator', () => {
+describe('CurrencyCalculatorInner', () => {
   beforeEach(() => {
     queryClient.setQueryData(CurrenciesKey, currenciesMockData);
     queryClient.setQueryData(CurrenciesRateKey, currencyRatesMockData);
@@ -28,7 +28,7 @@ describe('CurrencyCalculator', () => {
   it('Should set secondary amount after adding primary amount, primary currency and secondary currency', () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <CurrencyCalculator />
+        <CurrencyCalculatorInner />
       </QueryClientProvider>,
     );
 
@@ -58,7 +58,7 @@ describe('CurrencyCalculator', () => {
   it('Should set primary amount after adding secondary amount, primary currency and secondary currency', () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <CurrencyCalculator />
+        <CurrencyCalculatorInner />
       </QueryClientProvider>,
     );
 

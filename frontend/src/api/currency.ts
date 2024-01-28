@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 type Response<T> = {
   message: 'Success';
@@ -7,9 +7,16 @@ type Response<T> = {
 
 export type GetCurrencyResponse = Record<string, string>;
 
-const getCurrencies = async (): Promise<GetCurrencyResponse> => {
+const getCurrencies = async ({
+  signal,
+}: {
+  signal: AbortSignal;
+}): Promise<GetCurrencyResponse> => {
   const result = await fetch(
     `${import.meta.env.VITE_API_BASE_URL}/api/currencies`,
+    {
+      signal,
+    },
   );
 
   const responseData = (await result.json()) as Response<GetCurrencyResponse>;
@@ -31,8 +38,14 @@ export type GetCurrencyRatesResponse = {
   rates: Record<string, number>;
 };
 
-const getCurrencyRates = async (): Promise<GetCurrencyRatesResponse> => {
-  const result = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/rates`);
+const getCurrencyRates = async ({
+  signal,
+}: {
+  signal: AbortSignal;
+}): Promise<GetCurrencyRatesResponse> => {
+  const result = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/rates`, {
+    signal,
+  });
 
   const responseData =
     (await result.json()) as Response<GetCurrencyRatesResponse>;
@@ -43,7 +56,7 @@ const getCurrencyRates = async (): Promise<GetCurrencyRatesResponse> => {
 export const CurrenciesRateKey = ['currency-rates'];
 
 export const useGetCurrencyRates = () => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: CurrenciesRateKey,
     queryFn: getCurrencyRates,
   });

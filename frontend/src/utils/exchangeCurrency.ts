@@ -3,7 +3,7 @@ import { type GetCurrencyRatesResponse } from '@/api';
 import { getNormalizedNumber } from './getNormalizedNumber';
 
 // for now, assuming we always have currency on the list
-type ExchangeCurrencyParams = {
+export type ExchangeCurrencyParams = {
   fromValue: number;
   fromCurrency: string;
   toCurrency: string;

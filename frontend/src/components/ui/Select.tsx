@@ -9,6 +9,12 @@ import {
 import classes from './Select.module.css';
 import { Text } from './Text';
 
+type SelectVariant = 'large';
+
+const variantClasses: Record<SelectVariant, string> = {
+  large: 'select-large',
+};
+
 type SelectOption = { label: string; value: string }; // for simplicity restricted string type, ideally it should be generic type
 
 export type SelectProps = Omit<
@@ -17,7 +23,7 @@ export type SelectProps = Omit<
 > & {
   label: string;
   options: SelectOption[];
-  variant?: 'large'; // add spec for a small, sm
+  variant?: SelectVariant; // add spec for a small, sm
   selected: string;
   onChange: (selected: string) => void;
 };
@@ -35,21 +41,18 @@ export const Select: FC<SelectProps> = ({
 
   // external className only allowed to add margins by parent
   // in any other cases label component should design itself
-  const totalClasses = cn(classes['select-container'], className);
-
-  const selectClassNames: unknown[] = [classes.select];
-  switch (variant) {
-    case 'large':
-    default:
-      selectClassNames.push(classes['select-large']);
-  }
+  const totalClasses = [classes['select-container'], className];
+  const selectClassNames: unknown[] = [
+    classes.select,
+    classes[variantClasses[variant]],
+  ];
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
     onChange(event.target.value);
   };
 
   return (
-    <div className={totalClasses}>
+    <div className={cn(totalClasses)}>
       <Text
         as="label"
         color="secondary"

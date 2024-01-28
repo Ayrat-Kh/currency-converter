@@ -1,12 +1,12 @@
 import cn from 'classnames';
 import { type ButtonHTMLAttributes, type FC } from 'react';
 
-import classes from './Select.module.css';
+import classes from './Button.module.css';
 
 type ButtonVariant = 'primary' | 'ghost';
 
 const variantClasses: Record<ButtonVariant, string> = {
-  ghost: 'button--ghosted',
+  ghost: 'button-ghosted',
   primary: '',
 };
 

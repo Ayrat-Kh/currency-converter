@@ -14,9 +14,15 @@ export const CurrencyRateRefetcher = () => {
 
   return (
     <div>
-      <Text>Couldn't update rates.</Text>
+      <Text color="error" variant="base2">
+        Couldn't update rates.
+      </Text>
       <Button variant="ghost" onClick={() => refetchCurrencyRates()}>
-        Try again?
+        <u>
+          <Text color="error" variant="base2">
+            Try again?
+          </Text>
+        </u>
       </Button>
     </div>
   );

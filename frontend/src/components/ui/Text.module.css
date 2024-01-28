@@ -27,15 +27,15 @@
   color: var(--text-primary);
 }
 .text-white {
-  color: white;
+  color: var(--text-white);
 }
 
 .text-normal {
-  font-weight: 400;
+  font-weight: var(--text-font-normal);
 }
 .text-semibold {
-  font-weight: 500;
+  font-weight: var(--text-font-semibold);
 }
 .text-bold {
-  font-weight: 700;
+  font-weight: var(--text-font-bold);
 }

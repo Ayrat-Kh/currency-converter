@@ -25,9 +25,9 @@ type ExchangeDebounceParams = Omit<ExchangeCurrencyParams, 'rates'>;
 export const useCurrencyState = (): [CurrencyState, CurrencyStateHandlers] => {
   const { refetch: refetchCurrencyRates } = useGetCurrencyRates();
 
-  const [toAmount, setToAmount] = useState(0);
+  const [toAmount, setToAmount] = useState(NaN);
   const [toCurrency, setToCurrency] = useState('');
-  const [fromAmount, setFromAmount] = useState(0);
+  const [fromAmount, setFromAmount] = useState();
   const [fromCurrency, setFromCurrency] = useState('');
 
   const updateValue = useDebounceHandler<

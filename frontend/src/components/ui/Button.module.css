@@ -17,7 +17,8 @@
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.button--ghosted {
+.button-ghosted {
   border: none;
+  background: none;
   padding: 0;
 }

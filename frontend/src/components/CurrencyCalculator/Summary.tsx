@@ -27,26 +27,23 @@ export const Summary: FC<SummaryProps> = ({
 
   const totalClasses = `${classes['summary-container']} ${className}`;
 
-  if (secondaryCurrency === '' || mainCurrency === '') {
-    return (
-      <div className={totalClasses}>
-        <Text color="white">Please select currencies</Text>
-      </div>
-    );
-  }
-
-  if (isNaN(secondaryAmount) || isNaN(mainAmount)) {
-    return (
-      <div color="white" className={totalClasses}>
-        <Text>Please select amount</Text>
-      </div>
-    );
-  }
-
   if (isRefetchingCurrencies) {
     return (
-      <div color="white" className={totalClasses}>
-        <Text>Please wait while updating rates</Text>
+      <div className={totalClasses}>
+        <Text color="white">Please wait while updating rates</Text>
+      </div>
+    );
+  }
+
+  if (
+    secondaryCurrency === '' ||
+    mainCurrency === '' ||
+    isNaN(secondaryAmount) ||
+    isNaN(mainAmount)
+  ) {
+    return (
+      <div className={totalClasses}>
+        <Text color="white">Please fill the form</Text>
       </div>
     );
   }

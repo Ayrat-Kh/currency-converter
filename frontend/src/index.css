@@ -12,6 +12,11 @@
   --text-secondary: grey;
   --text-tertiary: #0588f0;
   --text-error: red;
+  --text-white: white;
+
+  --text-font-normal: 400;
+  --text-font-semibold: 500;
+  --text-font-bold: 700;
 
   --border-primary: black;
   --border-secondary: grey;
@@ -19,6 +24,7 @@
   --bg-primary: #ffe770;
   --bg-secondary: grey;
   --bg-tertiary: #0588f0;
+  --bg-white: white;
 
   --text-base: 16px;
   --text-base1: 14px;

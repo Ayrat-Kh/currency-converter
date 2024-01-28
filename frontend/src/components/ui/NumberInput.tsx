@@ -71,7 +71,7 @@ export const NumberInput: FC<NumberInputProps> = ({
         className={cn(inputClassNames)}
         value={value || ''}
         onChange={handleChange}
-        data-1p-ignore={true}
+        name="fakenumberinput"
         {...restInputProps}
       />
     </div>
